@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ["./app/tailwind.css"],
   modules: ['@nuxtjs/supabase', '@vant/nuxt'],
   supabase: {
@@ -13,5 +13,13 @@ export default defineNuxtConfig({
   },
   vite:{
     plugins: [tailwindcss()]
+  },
+  runtimeConfig: {
+    public: {
+      imgBaseUrl: 'https://nfcywblyimwziaqpopdf.supabase.co/storage/v1/object/public'
+    }
+  },
+  routeRules:{
+    '/admin/**':{ssr:false}
   }
 })
