@@ -14,6 +14,7 @@
                     <van-uploader v-model="fileList" :max-count="1" :after-read="uploadFile" />
                 </template>
             </van-field>
+            <van-field v-model="newCarousel.order" label="排序" type="number" placeholder="数字越大越靠前" />
             <van-field name="switch" label="是否启用">
                 <template #input>
                     <van-switch v-model="newCarousel.is_active" />
@@ -29,30 +30,22 @@
     </div>
 </template>
 <script setup>
-// const newCarousel = ref({
-//     title: '',
-//     image_url: '',
-//     link: '',
-//     order: 0,
-//     is_active: true,
-//     description: ''
-// });
+const newCarousel = ref({
+    title: '',
+    image_url: '',
+    link: '',
+    order: 0,
+    is_active: true,
+    description: ''
+});
 const fileList = ref([])
 const route = useRoute()
 const { id } = route.query
 if(!id){
     navigateTo('/admin/carousel/list')
 }
-// useAsyncData('getCarouselId', async () => {
-//     const data = await useSupabaseClient().from('carousel').select().eq('id', id)
-//     if (data.length>0) {
-//         newCarousel.value = res.data[0]
-//         const fileUrl = useSupabaseImgUrl(newCarousel.value.image_url)
-//         fileList.value.push({ url: fileUrl })
-//     }
-//     return data
-// })
-const { data: newCarousel } = await useAsyncData('mycaroutsbyid', async () => {
+
+const { data: getCarousel } = await useAsyncData('mycaroutsbyid', async () => {
     const res = await useSupabaseClient().from('carousel').select().eq('id', id)
     if(res.data.length>0){
         const fileUrl = useSupabaseImgUrl(res.data[0].image_url)
@@ -60,7 +53,7 @@ const { data: newCarousel } = await useAsyncData('mycaroutsbyid', async () => {
         return res.data[0] ?? {}
     }
 }, { default: () => {}})
-
+newCarousel.value = getCarousel.value
 // 文件处理
 const uploadFile = async (file) => {
     const fileitem = file.file

@@ -10,6 +10,7 @@
         <thead>
           <tr>
             <th>ID</th>
+            <th>排序</th>
             <th>标题</th>
             <th>地址</th>
             <th>图片</th>
@@ -21,6 +22,7 @@
           <!-- row 1 -->
           <tr v-for="(carousel, index) in carousels">
             <th>{{ index + 1 }}</th>
+            <td><input type="number" v-model="carousel.order" class="input w-12" @change="changeOrder(carousel.id,carousel.order)"></td>
             <td>{{ carousel.title }}</td>
             <td>{{ carousel.link }}</td>
             <td>
@@ -44,7 +46,7 @@
 
 // 获取轮播图数据
 const { data: carousels } = await useAsyncData('mycarouts', async () => {
-    const res = await useSupabaseClient().from('carousel').select('*').order('order', { ascending: true })
+    const res = await useSupabaseClient().from('carousel').select('*').order('order', { ascending: false })
     return res.data ?? []
 }, { default: () => [] })
 
@@ -52,6 +54,11 @@ const { data: carousels } = await useAsyncData('mycarouts', async () => {
 const changeIsActive = async (item) => {
   // 修改数据库
   await useSupabaseClient().from('carousel').update({ is_active: item.is_active }).eq('id', item.id)
+}
+// 修改轮播排序
+const changeOrder = async(id,order)=>{
+  console.log({id,order})
+  await useSupabaseClient().from('carousel').update({ order }).eq('id', id)
 }
 // 删除轮播
 const delectItem = async (item) => {
@@ -78,4 +85,5 @@ const Edit = (id) => {
     query: { "id": id }
   })
 }
+
 </script>

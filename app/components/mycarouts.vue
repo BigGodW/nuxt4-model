@@ -9,7 +9,7 @@
 <script setup>
 
 const { data: mycarouts } = await useAsyncData('mycarouts', async () => {
-    const res = await useSupabaseClient().from('carousel').select('*').eq('is_active', true).order('order', { ascending: true })
+    const res = await useSupabaseClient().from('carousel').select('*').eq('is_active', true).order('order', { ascending: false })
     return res.data ?? []
 }, { default: () => [] })
 

@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-between items-center m-2">
         <h1>轮播图编辑</h1>
-        <button class="btn btn-info btn-sm" @click="$router.back()">取消</button>
+        <button class="btn btn-info btn-sm" @click="$router.push('/admin/carousel/list')">取消</button>
     </div>
     <div>
         <van-cell-group inset>
@@ -14,6 +14,7 @@
                     <van-uploader v-model="fileList" :max-count="1"  :after-read="uploadFile" />
                 </template>
             </van-field>
+            <van-field v-model="newCarousel.order" label="排序" type="number" placeholder="数字越大越靠前" />
             <van-field name="switch" label="是否启用">
                 <template #input>
                     <van-switch v-model="newCarousel.is_active" />
