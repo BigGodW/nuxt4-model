@@ -73,6 +73,7 @@ const addNewcategories = async () => {
         if (!res.error) {
             // 添加成功
             newCategories.value = {}
+            fileList.value =[]
             // 刷新分类列表
             categorielist.value = await useTableListByOrder('article_categories')
             // 关闭弹出框

@@ -49,7 +49,6 @@ const { data: carousels } = await useAsyncData('mycarouts', async () => {
     const res = await useSupabaseClient().from('carousel').select('*').order('order', { ascending: false })
     return res.data ?? []
 }, { default: () => [] })
-
 // 修改轮播图状态
 const changeIsActive = async (item) => {
   // 修改数据库
