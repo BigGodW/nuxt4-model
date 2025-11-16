@@ -27,14 +27,15 @@ const menuList = [
     //         { title: '添加用户', path: "/admin/user/add", icon: 'friends' },
     //     ]
     // },
-    // {
-    //     title: '文章管理',
-    //     icon: "column",
-    //     children: [
-    //         { title: '文章列表', path: "/admin/article/list", icon: 'bars' },
-    //         { title: '添加文章', path: "/admin/article/add", icon: 'edit' },
-    //     ]
-    // },
+    {
+        title: '文章管理',
+        icon: "column",
+        children: [
+            { title: '文章分类', path: "/admin/article/categories", icon: 'bars' },
+            { title: '文章列表', path: "/admin/article/list", icon: 'bars' },
+            { title: '添加文章', path: "/admin/article/add", icon: 'edit' },
+        ]
+    },
     // {
     //     title: '文章分类',
     //     icon: "cluster",

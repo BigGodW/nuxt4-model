@@ -44,8 +44,7 @@ const uploadFile = async (file) => {
     const fileitem = file.file
     // 压缩图片
     try {
-        const minFile = await compressImage(fileitem)
-        const pathFull = await useSupabaseUpload('carousel', minFile)
+        const pathFull = await useSupabaseUpload('carousel', fileitem)
         newCarousel.value.image_url = pathFull
     } catch (err) {
         console.error('图片压缩上传失败')
