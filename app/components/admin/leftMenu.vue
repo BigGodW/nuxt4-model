@@ -32,6 +32,7 @@ const menuList = [
         icon: "column",
         children: [
             { title: '文章分类', path: "/admin/article/categories", icon: 'bars' },
+            { title: '文章标签', path: "/admin/article/tag", icon: 'bars' },
             { title: '文章列表', path: "/admin/article/list", icon: 'bars' },
             { title: '添加文章', path: "/admin/article/add", icon: 'edit' },
         ]

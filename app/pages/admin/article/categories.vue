@@ -59,7 +59,7 @@
     </div>
 </template>
 <script setup>
-const categories = await useTableList('article_categories')
+const categories = await useTableListByOrder('article_categories')
 const categorielist = ref(categories)
 const newCategories = ref({
     name: "",
@@ -74,7 +74,7 @@ const addNewcategories = async () => {
             // 添加成功
             newCategories.value = {}
             // 刷新分类列表
-            categorielist.value = await useTableList('article_categories')
+            categorielist.value = await useTableListByOrder('article_categories')
             // 关闭弹出框
             show.value = false
             showSuccessToast('添加成功')
@@ -87,7 +87,7 @@ const changeOrder = async (id, order) => {
     const res = await useSupabaseClient().from('article_categories').update({ 'order': order }).eq('id', id)
     console.log(res)
     // 刷新分类列表
-    // categorielist.value = await useTableList('article_categories')
+    categorielist.value = await useTableListByOrder('article_categories')
 }
 // 弹出框
 const show = ref(false);
@@ -122,7 +122,7 @@ const changeCategories = async () => {
     if (!res.error) {
         showSuccessToast('保存成功')
         // 刷新分类列表
-        categorielist.value = await useTableList('article_categories')
+        categorielist.value = await useTableListByOrder('article_categories')
         fileList.value = []
         newCategories.value = {}
         show.value = false;
@@ -138,7 +138,7 @@ const delectItem = async (item) => {
     .then(
       async () => {
         await useSupabaseClient().from('article_categories').delete().eq('id', item.id)
-        categorielist.value = await useTableList('article_categories')
+        categorielist.value = await useTableListByOrder('article_categories')
       }
     )
     .catch(() => {
