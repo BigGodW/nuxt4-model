@@ -16,7 +16,7 @@ const { data: articleTagList } = await useAsyncData(
 
  const { data: articleCategoriesList } = await useAsyncData(
     async () => {
-        const res = await useTableList('article_categories').catch(err =>{return []})
+        const res = await useTableListByOrder('article_categories').catch(err =>{return []})
         return res
     })
  useState('articleCategoriesList',()=>{return articleCategoriesList.value })

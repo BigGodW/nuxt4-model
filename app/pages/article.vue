@@ -6,7 +6,7 @@
         <div class=" opacity-0">
             <article-header-back :title="article?.title" />
         </div>
-        <div class="m-2" v-if="article.title">
+        <div class="m-2" v-if="article">
             <div>
                 <div class="aspect-video">
                     <img class="w-full h-full object-cover aspect-video" :src="useSupabaseImgUrl(article.image_url)"
@@ -35,18 +35,23 @@
                 <pre class=" overflow-hidden">{{ article }}</pre>
             </div>
         </div>
-        <div v-else></div>
+        <div v-else>
+            <h1 class=" text-center my-5">文章路径有误</h1>
+        </div>
     </div>
 </template>
 <script setup>
+
 import dayjs from 'dayjs'
 const route = useRoute()
-const articleId = route.query.id
+const articleId = route.query.id ?? ''
+console.log(articleId)
 // 获取文章信息
 const { data: article } = await useAsyncData('getItemArticle', async () => {
     const res = await useSupabaseClient().from('articles').select().eq('id', articleId).single()
-    return res.data
+    
+    return res.data ?? {}
 })
-const now = dayjs(article.value.updated_at).format('YYYY-MM-DD HH:mm:ss')
+
 
 </script>

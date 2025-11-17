@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink :to="'/article/?id='+article.id">
+    <NuxtLink :to="'/article?id='+article.id">
     <div class=" flex m-2 p-1 ">
         <div class=" h-24 aspect-3/2">
             <img v-if="!article.image_url" :src="/public/img/wubug.png" alt="">

@@ -1,13 +1,15 @@
 <template>
-    <div v-if="mycarouts.length > 0">
+    <div class="aspect-video">
+      <div v-if="mycarouts.length > 0">
         <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
             <van-swipe-item v-for="item in mycarouts" :key="item.id">
-              <div>
+              <div class=" relative ">
                 <img class="w-full aspect-video object-cover" :src="useSupabaseImgUrl(item.image_url)" alt="">
-                <h1>{{ item.title }}</h1>
+                <h1 class=" absolute right-2 bottom-2 font-bold text-2xl ">{{ item.title }}</h1>
               </div>
             </van-swipe-item>
         </van-swipe>
+    </div>
     </div>
 </template>
 <script setup>
@@ -28,10 +30,5 @@ onMounted(async()=>{
 
 </script>
 <style>
-  .my-swipe .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    text-align: center;
-    background-color: #39a9ed;
-  }
+ 
 </style>

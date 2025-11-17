@@ -1,7 +1,8 @@
 <template>
     <div>
         <h1>编辑文章</h1>
-        <div>
+        <div v-if="articleData">
+            
             <van-cell-group inset>
                 <van-field v-model="articleData.title" label="标题" placeholder="请输入标题" />
                 <van-field v-model="articleData.slug" label="slug地址" placeholder="slug地址" />
@@ -69,15 +70,17 @@ if(!articleId){
     navigateTo('/admin/article/list')
 }
 // 获取文章信息
-const { data: articleData } = await useAsyncData(
+const articleData = ref({})
+await useAsyncData(
     async () => {
         const res = await useSupabaseClient().from('articles').select('*').eq('id', articleId).single()
         if (!res.error) {
-            return res.data
+            articleData.value = res.data
         } else {
             return {}
         }
     })
+ 
 const article_categories = useState('articleCategoriesList')
 const taglist = useState('articleTagList')
 const newTagName = ref('')

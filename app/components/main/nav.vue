@@ -38,14 +38,14 @@ const getArticleList = async () => {
         return []
     }
 }
-
+const showList = ref([])
 const categoriesId = ref('')
-const {data:showList} = await useAsyncData(async()=>{
-    return await getArticleList()
-})
+// const {data:showList} = await useAsyncData(async()=>{
+//     return await getArticleList()
+// })
 onMounted(async()=>{
      
-    // showList.value =  await getArticleList()
+    showList.value =  await getArticleList()
 })
 // 切换菜单
 const render = async (index,title) => {
