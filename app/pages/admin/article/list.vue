@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h1>文章列表</h1>
+        <div class="flex justify-between items-center mb-4">
+            <h1>文章列表</h1>
+            <button class="btn btn-info">添加文章</button>
+        </div>
         <div v-if="articlelist">
             <div>
                 <div class="overflow-x-auto">
@@ -23,7 +26,7 @@
                             <tr v-for="(article, index) in articlelist">
                                 <th>{{ index + 1 }}</th>
                                 <td><input type="number" v-model="article.order" class="input w-12"
-                                        @change="changeOrder(carousel.id, carousel.order)"></td>
+                                        @change="changeOrder(article.id, article.order)"></td>
                                 <td>{{ article.title }}</td>
                                 <td>{{ getArticleCategoryName(article.category_id) }}</td>
                                 <td>
@@ -44,8 +47,8 @@
                                         @change="changeIsActive(article)" />
                                 </td>
                                 <td class=" space-x-1">
-                                    <button class="btn btn-xs btn-success" @click="Edit(carousel.id)">编辑</button>
-                                    <button class="btn btn-xs btn-error" @click="delectItem(carousel)">删除</button>
+                                    <button class="btn btn-xs btn-success" @click="Edit(article.id)">编辑</button>
+                                    <button class="btn btn-xs btn-error" @click="delectItem(article)">删除</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -58,11 +61,51 @@
 
 <script setup>
 // 初始化获取文章列表
+const getDatalist = async()=>{
+    const res = await useTableListByOrder('articles').catch(err =>{return []})
+    return res
+}
+
 const { data: articlelist } = await useAsyncData(
     async () => {
-        const res = await useTableList('articles').catch(err =>{return []})
-        return res
+        return await getDatalist()
     })
-
-
+const reGetDatalist = async()=>{
+    articlelist.value = await getDatalist()
+}
+// 删除文章
+const delectItem = async (article) => {
+    const isConfirm = confirm(`确定删除文章【${article.title}】吗？`)
+    if (isConfirm) {
+        const res = await useSupabaseClient().from('articles').delete().eq('id', article.id)
+        if (!res.error) {
+            // 删除成功，刷新列表
+            articlelist.value = articlelist.value.filter(item => item.id !== article.id)
+            showSuccessToast('删除成功')
+        }
+    }
+}
+// 修改排序
+const changeOrder = async (id, order) => {
+    const res = await useSupabaseClient().from('articles').update({ 'order': order }).eq('id', id)
+    if (!res.error) {
+        showSuccessToast('排序更新成功')
+        reGetDatalist()
+    }
+}
+// 修改启用状态
+const changeIsActive = async (article) => {
+    const res = await useSupabaseClient().from('articles').update({ 'is_active': article.is_active }).eq('id', article.id)
+    if (!res.error) {
+        showSuccessToast('状态更新成功')
+        reGetDatalist()
+    }
+}
+// 编辑文章
+const Edit = (id) => {
+    navigateTo({
+        path: '/admin/article/edit',
+        query: { id: id }
+    })
+}
 </script>

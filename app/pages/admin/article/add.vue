@@ -57,7 +57,6 @@
                 </van-button>
             </div>
         </van-cell-group>
-        {{ newArticle }}
     </div>
 </template>
 <script setup>
