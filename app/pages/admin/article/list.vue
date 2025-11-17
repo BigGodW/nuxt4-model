@@ -2,7 +2,7 @@
     <div>
         <div class="flex justify-between items-center mb-4">
             <h1>文章列表</h1>
-            <button class="btn btn-info">添加文章</button>
+            <nuxt-link to="/admin/article/add"><button class="btn btn-info">添加文章</button></nuxt-link>
         </div>
         <div v-if="articlelist">
             <div>
