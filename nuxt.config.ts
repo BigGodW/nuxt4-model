@@ -13,5 +13,9 @@ export default defineNuxtConfig({
   },
   vite:{
     plugins: [tailwindcss()]
-  }
+  },
+  //ssr: true, // 是否开启服务端渲染,默认 true 开启
+  routeRules: {
+    
+  },
 })
