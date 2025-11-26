@@ -16,5 +16,7 @@
 <script setup>
 const route = useRoute()
 const articleId = route.params.id
-
+definePageMeta({
+  layout: 'content',
+})
 </script>

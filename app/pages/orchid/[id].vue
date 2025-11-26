@@ -1,6 +1,5 @@
 <template>
     <div>
-        <MainHeaderBack></MainHeaderBack>
         <OrchidCarousel></OrchidCarousel>
         <div class=" bg-sky-100">
             <h1>兰花信息</h1>
@@ -18,5 +17,7 @@ const route = useRoute()
 const articleId = route.params.id
 definePageMeta({
   watchQuery: ['articleId'], // 当路由中的 ?id= 发生变化时，会重新触发页面数据加载
+  layout: 'content',
 })
+
 </script>
